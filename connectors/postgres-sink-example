@@ -1,0 +1,20 @@
+
+{
+    "name": "politicians-replicate-jdbc-sink",
+    "config": {
+        "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+        "tasks.max": "5",
+        "topics": "politicians",
+        "connection.url": "jdbc:postgresql://postgres:5432/postgres?user=postgres&password=postgres",
+        "transforms": "unwrap, timestamp",                                                  
+        "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",                                                
+        "auto.create": "true",                                                   
+        "insert.mode": "upsert",                                                 
+        "pk.fields": "id",                                                       
+        "pk.mode": "record_value", 
+        "transforms.timestamp.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.timestamp.target.type": "Timestamp",
+        "transforms.timestamp.field": "time_stamp",
+        "transforms.timestamp.format": "yyyy-MM-dd'T'HH:mm:ss.SSSSS'Z'"   
+    }
+}
